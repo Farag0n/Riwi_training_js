@@ -1,0 +1,34 @@
+{
+  "books": [
+    {
+      "id": "67015",
+      "title": "Viaje a el centro de la tierra",
+      "author": "Julio Verne",
+      "year": 1864
+    },
+    {
+      "id": "90827",
+      "title": "JavaScript: The Good Parts",
+      "author": "Douglas Crockford",
+      "year": 2008
+    },
+    {
+      "id": "70358",
+      "title": "La Seriedad en los tiempos del colera",
+      "author": "Mi cojon derecho",
+      "year": 2025
+    },
+    {
+      "id": "1e54",
+      "name": "Alice",
+      "email": "alice@example.com",
+      "age": 30
+    },
+    {
+      "id": "84025",
+      "title": "Arduino trucos y secretos",
+      "author": "Paolo Aliverti",
+      "year": 2019
+    }
+  ]
+}
