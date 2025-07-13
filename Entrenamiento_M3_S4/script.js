@@ -1,59 +1,78 @@
-// Evento para guardar datos en el local Storage
-document.getElementById("saveButton").addEventListener("click", ()=> {
-    const nameInput = document.getElementById("name");
-    const ageInput = document.getElementById("age");
+// Seleccionar elementos del DOM
+const loginForm = document.getElementById('loginForm');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const message = document.getElementById('message');
+const welcomeMessage = document.getElementById('welcomeMessage');
+const logoutBtn = document.getElementById('logoutBtn');
 
-    if (!nameInput || !ageInput) {
-        console.error("los elementos del formulario no existen")
-        return;
-    }
+// Función para mostrar mensajes en el DOM y en consola
+function showMessage(text, className) {
+  message.textContent = text;
+  message.className = className;
+  console.log(`Mensaje: ${text}`);
+}
 
-    const name = nameInput.value.trim();
-    const age = parseInt(ageInput.value);
+// Función para actualizar la interfaz (DOM) según el estado de login
+function updateUI() {
+  const storedUser = localStorage.getItem('username');
+  const sessionActive = sessionStorage.getItem('loggedIn');
 
-    if (name && !isNaN(age)) {
-        localStorage.setItem("userName", name)
-        localStorage.setItem("userAge", age);
-        displayData();
-    }
-    else{
-        alert("Por favor ingresa un nombre valido y una edad numerica.")
-    }
+  if (storedUser && sessionActive) {
+    welcomeMessage.textContent = `Bienvenido, ${storedUser}`;
+    loginForm.style.display = 'none';
+    logoutBtn.style.display = 'block';
+  } else {
+    welcomeMessage.textContent = 'Iniciar Sesión';
+    loginForm.style.display = 'block';
+    logoutBtn.style.display = 'none';
+  }
+}
+
+// Evento de login 
+loginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  console.log(`Usuario ingresado: ${username}`);
+  console.log(`Contraseña ingresada: ${password}`);
+
+  // Llamada al servidor para verificar credenciales
+  fetch(`http://localhost:3000/users?username=${username}&password=${password}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('Respuesta de JSON Server:', data);
+
+      if (data.length > 0) {
+        // Guardamos datos en Local Storage y Session Storage
+        localStorage.setItem('username', username);
+        sessionStorage.setItem('loggedIn', 'true');
+
+        showMessage('Login exitoso.', 'success');
+        updateUI();
+      } else {
+        showMessage('Usuario o contraseña incorrectos.', 'error');
+      }
+    })
+    .catch(error => {
+      console.error('Error de conexión:', error);
+      showMessage('Error al conectar con el servidor.', 'error');
+    });
+
+  loginForm.reset();
 });
 
-// Funcion para mostrar los datos almacenados
-function displayData() {
-    const name = localStorage.getItem("userName");
-    const age = localStorage.getItem("userAge");
-    const outputDiv = document.getElementById("output");
+// Evento para cerrar sesión (logout)
+logoutBtn.addEventListener('click', function() {
+  localStorage.removeItem('username');
+  sessionStorage.removeItem('loggedIn');
+  showMessage('Has cerrado sesión.', 'error');
+  updateUI();
+});
 
-    if (name && age) {
-        outputDiv.textContent = `Hola ${name}, tienes ${age} años.`;
-    }
-}
-// Al cargar la pagina, mostrar los datos almacenados
-window.onload = displayData;
-
-// Iniciar el contador de interacciones en session storage
-    if(!sessionStorage.getItem("interactionCount")){
-        sessionStorage.setItem("interactionCount", 0);
-    }
-
-    // Actualizar contador de interacciones
-    function updateInteractionCount(){
-        let count = parseInt(sessionStorage.getItem("interactionCount"));
-        count ++;
-        sessionStorage.setItem("interactionCount", count);
-        console.log(`Interacciones en esta sesion: ${count}`);
-    }
-
-    // Asignar eventos a el contador
-    document.getElementById("saveButton").addEventListener("click", updateInteractionCount)
-    document.getElementById("clearButton").addEventListener("click", updateInteractionCount);
-
-
-// Evento para limpiar los datos del local Storage
-document.getElementById("clearButton").addEventListener("click", () => {
-    localStorage.clear();
-    displayData();
-})
+// Al cargar la página mostramos datos almacenados
+console.log('Local Storage:', localStorage.getItem('username'));
+console.log('Session Storage:', sessionStorage.getItem('loggedIn'));
+updateUI();

@@ -1,0 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3); /* Fondo degradado */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0; /* Evita scroll innecesario */
+}
+
+.login-container {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  text-align: center;
+  max-width: 350px; /* Hace que se vea bien en móviles */
+  width: 90%;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Bordes redondeados */
+  outline: none;
+}
+
+input:focus {
+  border-color: #4a90e2; /* Azul suave al enfocar */
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4a90e2;  /* Azul elegante */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #357ABD; /* Azul más oscuro al pasar el mouse */
+}
+
+#message {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* Clases dinámicas para mensajes */
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
