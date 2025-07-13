@@ -6,22 +6,30 @@
   <title>Login DOM + Storage</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
 
+<body>
+  <!-- Contenedor principal del formulario de login, con clase para aplicar estilos -->
   <div class="login-container">
+    <!-- Título principal del formulario, tiene ID para poder modificarlo desde JavaScript -->
     <h2 id="welcomeMessage">Iniciar Sesión</h2>
 
+    <!-- Formulario de inicio de sesión, con ID para poder manipularlo desde JS -->
     <form id="loginForm">
+      <!-- Campo de entrada de texto para el nombre de usuario, con ID e indicador de requerido -->
       <input type="text" id="username" placeholder="Usuario" required>
+      <!-- Campo de entrada tipo contraseña, con ID e indicador de requerido -->
       <input type="password" id="password" placeholder="Contraseña" required>
+      <!-- Botón para enviar el formulario -->
       <button type="submit">Ingresar</button>
     </form>
-
+    <!-- Botón para cerrar sesión, oculto inicialmente con style inline -->
     <button id="logoutBtn" style="display: none;">Cerrar Sesión</button>
-
+    <!-- Párrafo vacío para mostrar mensajes de estado (como error o bienvenida) -->
     <p id="message"></p>
   </div>
 
+  <!-- Vincula el archivo JavaScript que manejará la lógica del login -->
   <script src="script.js"></script>
 </body>
+
 </html>
